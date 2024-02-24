@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['middleware' => ['verify.shopify']], function () {
+    // Home page
+    Route::get('/', [\App\Http\Controllers\PriceUpdateController::class, 'priceshow'])
+    ->name('home');
+    Route::post('/', [\App\Http\Controllers\PriceUpdateController::class, 'priceupdate'])
+    ->name('price.update');
 });
